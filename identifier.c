@@ -52,6 +52,4 @@ int identifier(char* input){
   }
 }
 
-int main(int argc, char *argv[]) {
-  return identifier(argv[1]);
-}
+
