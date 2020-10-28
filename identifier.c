@@ -21,23 +21,26 @@ int valid_f(char ch) {
     return 0;
 }
 
-int main(void) {
-  char achar;
+int identifier(char* input){
+	char achar;
   int  length, valid_id;
   length = 0;
   printf("Identificador: ");
-  achar = fgetc(stdin);
+  achar = *input;
+  input++;
   valid_id = valid_s(achar);
   if(valid_id) {
     length = 1;
   }
-  achar = fgetc(stdin);
-  while(achar != '\n') {
+  achar = *input;
+  input ++;
+  while(achar != '\0') {
     if(!(valid_f(achar))) {
       valid_id = 0;
     }
     length++;
-    achar = fgetc(stdin);
+    achar = *input;
+    input++;
   }
   if (valid_id && (length >= 1) && (length < 6)) {
     printf("Valido\n");
@@ -47,4 +50,8 @@ int main(void) {
     printf("Invalido\n");
     return 1;
   }
+}
+
+int main(int argc, char *argv[]) {
+  return identifier(argv[1]);
 }

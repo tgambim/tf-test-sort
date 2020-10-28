@@ -4,6 +4,11 @@ sudo: false
 language: c
 compiler:
   - gcc
+before_install:
+  - sudo apt-get update -y
+  - sudo apt-get -y install cppcheck
+  - sudo apt-get -y install valgrind
+  - sudo apt-get -y install sanitizer
 addons:
   apt:
     sources:
@@ -14,4 +19,7 @@ install:
   - "[ $GCC = gcc ] && export GCC=gcc || true"
 script:
   - make
-#  - make test
+  - make test
+  - make cppcheck
+  - make valgrind
+  - make sanitizer
