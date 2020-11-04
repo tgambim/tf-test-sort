@@ -8,27 +8,29 @@ TARGET1 = all_tests
 SRC_TEST=\
   $(UNITY_ROOT)/src/unity.c \
   $(UNITY_ROOT)/extras/fixture/src/unity_fixture.c \
-  identifier.c \
-  test/TestIdentifier.c \
-  test/test_runners/TestIdentifier_Runner.c \
+  src/sort.c \
+  test/TestSort.c \
+  test/test_runners/TestSort_Runner.c \
   test/test_runners/all_tests.c
 INC_DIRS=-Isrc -I$(UNITY_ROOT)/src -I$(UNITY_ROOT)/extras/fixture/src
 
 SRC_FILES=\
-  identifier.c \
-  identifier_main.c
+  src/array.c \
+  src/get_opt.c \
+  src/sort.c \
+  src/main.c 
 
 
 all: $(ALL)
 
-identifier: identifier.c clean
-	$(GCC) $(GCCFLAGS) -o $@ $(SRC_FILES)
+app: clean
+	$(GCC) $(GCCFLAGS) -o app $(SRC_FILES)
 
 cov: test
-	gcov -b identifier.c
+	gcov -b sort.c
 
 clean:
-	rm -fr $(ALL) *.o cov* *.dSYM *.gcda *.gcno *.gcov $(TARGET1) *.out.*
+	rm -fr $(ALL) *.o cov* *.dSYM *.gcda *.gcno *.gcov $(TARGET1) app *.out.*
 
 test: clean
 	$(GCC) $(GCCFLAGS) -fprofile-arcs -ftest-coverage $(INC_DIRS) $(SRC_TEST) -o $(TARGET1)
