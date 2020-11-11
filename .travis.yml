@@ -21,5 +21,15 @@ script:
   - make
   - make cov
   - make cppcheck
-  - make valgrind
-  - make sanitizer
+  - make valgrind method=selection
+  - make valgrind method=insertion
+  - make valgrind method=shell
+  - make valgrind method=quick
+  - make valgrind method=heap
+  - make valgrind method=merge
+  - make sanitizer method=selection
+  - make sanitizer method=insertion
+  - make sanitizer method=shell
+  - make sanitizer method=quick
+  - make sanitizer method=heap
+  - make sanitizer method=merge

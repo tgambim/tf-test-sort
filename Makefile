@@ -39,14 +39,16 @@ test: clean
 cppcheck: clean
 	cppcheck --enable=all --suppress=missingIncludeSystem $(SRC_FILES)
 
-valgrind: clean identifier
-	valgrind --leak-check=full --show-leak-kinds=all ./identifier dsa
-	valgrind --tool=cachegrind ./identifier dsa
-	valgrind --tool=callgrind ./identifier dsa
-	valgrind --tool=massif ./identifier dsa
+valgrind: clean app
+	valgrind --leak-check=full --show-leak-kinds=all ./app -a $(method) -n 6 -s descending -P
+	valgrind --tool=cachegrind ./app -a $(method) -n 6 -s descending -P
+	valgrind --tool=callgrind ./app -a $(method) -n 6 -s descending -P
+	valgrind --tool=massif ./app -a $(method) -n 6 -s descending -P
 
 sanitizer: clean
-	$(GCC) $(GCCFLAGS) -fsanitize=address -o identifier $(SRC_FILES)
-	./identifier dsa
+	$(GCC) $(GCCFLAGS) -fsanitize=address -o app $(SRC_FILES)
+	./app -a $(method) -n 6 -s descending -P
+	#$(GCC) $(GCCFLAGS) -fsanitize=memory -o app $(SRC_FILES)
+	#./app -a $(method) -n 6 -s descending -P
 
 testall: test cppcheck sanitizer valgrind

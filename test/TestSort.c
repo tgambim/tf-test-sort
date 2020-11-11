@@ -10,6 +10,8 @@
 #define ARRAY_SIZE 100
 #define ARRAY_START 20
 
+#define EVEN_SIZE 6
+#define ODD_SIZE 7
 
 static int fullV[ARRAY_SIZE];
 static int* v;
@@ -37,28 +39,11 @@ static void with(const int * data, int size){
 	memcpy(v, data, size*sizeof(int));
 }
 
-static void withOrderedArray(){
-	with((int[]) {0, 2, 3, 4, INT_MAX}, 5);
-}
-
-static void withMessyArray(){
-	with((int[]) {INT_MAX, 2, INT_MIN, 1, 0}, 5);
-}
-
-
 static void expect(const int * e, int size){
 	startArray(fullExpected);
 	memcpy(expected, e, size*sizeof(int));
 	//verifica se ordenou e se nao editou as posicoes fora do limite
 	TEST_ASSERT_EQUAL_INT_ARRAY(fullExpected, fullV, ARRAY_SIZE);
-}
-
-static void expectOrderedArray(){
-	expect((int[]) {0, 2, 3, 4, INT_MAX}, 5);
-}
-
-static void expectMessyArray(){
-	expect((int[]) {INT_MIN, 0, 1, 2, INT_MAX}, 5);
 }
 
 TEST_GROUP(Sort);
@@ -73,58 +58,143 @@ TEST_TEAR_DOWN(Sort){
 }
 
 /* TESTA COM ARRAY JÁ ORDENADO */
-TEST(Sort, TestSelectionOrderedArray){
-	testOrderedArray(selection_sort, 5);
+/* tamanho ímpar */
+static void withOrderedArrayOddSize(){
+	with((int[]) {0, 2, 3, 4, 4, 4, INT_MAX}, ODD_SIZE);
 }
-TEST(Sort, TestInsertionOrderedArray){
-	testOrderedArray(insertion_sort, 5);
+static void expectOrderedArrayOddSize(){
+	expect((int[]) {0, 2, 3, 4, 4, 4, INT_MAX}, ODD_SIZE);
 }
-TEST(Sort, TestShellOrderedArray){
-	testOrderedArray(shell_sort, 5);
+void testOrderedArrayOddSize(void (*f)(int*, int)){
+	withOrderedArrayOddSize();
+	f(v, ODD_SIZE);
+	expectOrderedArrayOddSize();
 }
-TEST(Sort, TestQuickOrderedArray){
-	withOrderedArray();
-	quick_sort(v, 0, 4);
-	expectOrderedArray();
+TEST(Sort, TestSelectionOrderedArrayOddSize){
+	testOrderedArrayOddSize(selection_sort);
 }
-TEST(Sort, TestHeapOrderedArray){
-	testOrderedArray(heap_sort, 5);
+TEST(Sort, TestInsertionOrderedArrayOddSize){
+	testOrderedArrayOddSize(insertion_sort);
 }
-TEST(Sort, TestMergeOrderedArray){
-	testOrderedArray(merge_sort, 5);
+TEST(Sort, TestShellOrderedArrayOddSize){
+	testOrderedArrayOddSize(shell_sort);
 }
-
-void testOrderedArray(void (*f)(int*, int), int size){
-	withOrderedArray();
-	f(v, size);
-	expectOrderedArray();
+TEST(Sort, TestQuickOrderedArrayOddSize){
+	withOrderedArrayOddSize();
+	quick_sort(v, 0, ODD_SIZE-1);
+	expectOrderedArrayOddSize();
+}
+TEST(Sort, TestHeapOrderedArrayOddSize){
+	testOrderedArrayOddSize(heap_sort);
+}
+TEST(Sort, TestMergeOrderedArrayOddSize){
+	testOrderedArrayOddSize(merge_sort);
+}
+/* tamanho par */
+static void withOrderedArrayEvenSize(){
+	with((int[]) {0, 2, 3, 3, 3, INT_MAX}, EVEN_SIZE);
+}
+static void expectOrderedArrayEvenSize(){
+	expect((int[]) {0, 2, 3, 3, 3, INT_MAX}, EVEN_SIZE);
+}
+void testOrderedArrayEvenSize(void (*f)(int*, int)){
+	withOrderedArrayEvenSize();
+	f(v, EVEN_SIZE);
+	expectOrderedArrayEvenSize();
+}
+TEST(Sort, TestSelectionOrderedArrayEvenSize){
+	testOrderedArrayEvenSize(selection_sort);
+}
+TEST(Sort, TestInsertionOrderedArrayEvenSize){
+	testOrderedArrayEvenSize(insertion_sort);
+}
+TEST(Sort, TestShellOrderedArrayEvenSize){
+	testOrderedArrayEvenSize(shell_sort);
+}
+TEST(Sort, TestQuickOrderedArrayEvenSize){
+	withOrderedArrayEvenSize();
+	quick_sort(v, 0, EVEN_SIZE-1);
+	expectOrderedArrayEvenSize();
+}
+TEST(Sort, TestHeapOrderedArrayEvenSize){
+	testOrderedArrayEvenSize(heap_sort);
+}
+TEST(Sort, TestMergeOrderedArrayEvenSize){
+	testOrderedArrayEvenSize(merge_sort);
 }
 /* FIM DOS TESTES COM ARRAY JÁ ORDENADO */
 
+
 /* TESTA COM ARRAY NÃO ORDENADO */
-TEST(Sort, TestSelectionMessyArray){
-	testMessyArray(selection_sort, 5);
+/* tamanho ímpar */
+static void withMessyArrayOddSize(){
+	with((int[]) {INT_MAX, 1, 2, 2, INT_MIN, 2, 2}, ODD_SIZE);
 }
-TEST(Sort, TestInsertionMessyArray){
-	testMessyArray(insertion_sort, 5);
+static void expectMessyArrayOddSize(){
+	expect((int[]) {INT_MIN, 1, 2, 2, 2, 2, INT_MAX}, ODD_SIZE);
 }
-TEST(Sort, TestShellMessyArray){
-	testMessyArray(shell_sort, 5);
+void testMessyArrayOddSize(void (*f)(int*, int)){
+	withMessyArrayOddSize();
+	f(v, ODD_SIZE);
+	expectMessyArrayOddSize();
 }
-TEST(Sort, TestQuickMessyArray){
-	withMessyArray();
-	quick_sort(v, 0, 4);
-	expectMessyArray();
+TEST(Sort, TestSelectionMessyArrayOddSize){
+	testMessyArrayOddSize(selection_sort);
 }
-TEST(Sort, TestHeapMessyArray){
-	testMessyArray(heap_sort, 5);
+TEST(Sort, TestInsertionMessyArrayOddSize){
+	testMessyArrayOddSize(insertion_sort);
 }
-TEST(Sort, TestMergeMessyArray){
-	testMessyArray(merge_sort, 5);
+TEST(Sort, TestShellMessyArrayOddSize){
+	testMessyArrayOddSize(shell_sort);
 }
-void testMessyArray(void (*f)(int*, int), int size){
-	withMessyArray();
-	f(v, size);
-	expectMessyArray();
+TEST(Sort, TestQuickMessyArrayOddSize){
+	withMessyArrayOddSize();
+	quick_sort(v, 0, ODD_SIZE-1);
+	expectMessyArrayOddSize();
+}
+TEST(Sort, TestHeapMessyArrayOddSize){
+	testMessyArrayOddSize(heap_sort);
+}
+TEST(Sort, TestMergeMessyArrayOddSize){
+	testMessyArrayOddSize(merge_sort);
+}
+/* tamanho par */
+static void withMessyArrayEvenSize(){
+	with((int[]) {INT_MAX, 2, 2, 2, INT_MIN, 0}, EVEN_SIZE);
+}
+static void expectMessyArrayEvenSize(){
+	expect((int[]) {INT_MIN, 0, 2, 2, 2, INT_MAX}, EVEN_SIZE);
+}
+void testMessyArrayEvenSize(void (*f)(int*, int)){
+	withMessyArrayEvenSize();
+	f(v, EVEN_SIZE);
+	expectMessyArrayEvenSize();
+}
+TEST(Sort, TestSelectionMessyArrayEvenSize){
+	testMessyArrayEvenSize(selection_sort);
+}
+TEST(Sort, TestInsertionMessyArrayEvenSize){
+	testMessyArrayEvenSize(insertion_sort);
+}
+TEST(Sort, TestShellMessyArrayEvenSize){
+	testMessyArrayEvenSize(shell_sort);
+}
+TEST(Sort, TestQuickMessyArrayEvenSize){
+	withMessyArrayEvenSize();
+	quick_sort(v, 0, EVEN_SIZE-1);
+	expectMessyArrayEvenSize();
+}
+TEST(Sort, TestHeapMessyArrayEvenSize){
+	testMessyArrayEvenSize(heap_sort);
+}
+TEST(Sort, TestMergeMessyArrayEvenSize){
+	testMessyArrayEvenSize(merge_sort);
 }
 //* FIM DOS TESTES COM ARRAY JÁ ORDENADO */
+
+
+TEST(Sort, TestQuickOrderedArrayWrongParameters){
+	with((int[]) {2, 1, 3, 1, 1, 3}, EVEN_SIZE);
+	quick_sort(v, 0, EVEN_SIZE-1);
+	expect((int[]) {1, 1, 1, 2, 3, 3}, EVEN_SIZE);
+}
