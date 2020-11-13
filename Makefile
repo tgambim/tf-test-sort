@@ -26,7 +26,9 @@ all: $(ALL)
 app: clean
 	$(GCC) $(GCCFLAGS) -o app $(SRC_FILES)
 
-cov: test
+cov: clean
+	$(GCC) $(GCCFLAGS) -fprofile-arcs -ftest-coverage $(INC_DIRS) $(SRC_TEST) -o $(TARGET1)
+	- ./$(TARGET1) -v
 	gcov -b sort.c
 
 clean:
