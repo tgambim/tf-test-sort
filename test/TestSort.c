@@ -193,8 +193,28 @@ TEST(Sort, TestMergeMessyArrayEvenSize){
 //* FIM DOS TESTES COM ARRAY JÁ ORDENADO */
 
 
-TEST(Sort, TestQuickOrderedArrayWrongParameters){
-	with((int[]) {2, 1, 3, 1, 1, 3}, EVEN_SIZE);
-	quick_sort(v, 0, EVEN_SIZE-1);
-	expect((int[]) {1, 1, 1, 2, 3, 3}, EVEN_SIZE);
+void testEmptyArray(void (*f)(int*, int)){
+	with(v, 0);
+	f(v, 0);
+	expect(v, 0);
+}
+TEST(Sort, TestQuickEmptyArray){
+	with(v, 0);
+	quick_sort(v, 0, 0);
+	expect(v, 0);
+}
+TEST(Sort, TestSelectionEmptyArray){
+	testEmptyArray(selection_sort);
+}
+TEST(Sort, TestInsertionEmptyArray){
+	testEmptyArray(insertion_sort);
+}
+TEST(Sort, TestShellEmptyArray){
+	testEmptyArray(shell_sort);
+}
+TEST(Sort, TestHeapEmptyArray){
+	testEmptyArray(heap_sort);
+}
+TEST(Sort, TestMergeEmptyArray){
+	testEmptyArray(merge_sort);
 }

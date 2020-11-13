@@ -40,6 +40,13 @@ TEST_GROUP_RUNNER(Sort)
   RUN_TEST_CASE(Sort, TestMergeMessyArrayEvenSize); 
   
   
-  RUN_TEST_CASE(Sort, TestQuickOrderedArrayWrongParameters); 
+	/* TESTA COM ARRAY VAZIO */
+  RUN_TEST_CASE(Sort, TestSelectionEmptyArray);
+  RUN_TEST_CASE(Sort, TestInsertionEmptyArray);
+  RUN_TEST_CASE(Sort, TestShellEmptyArray);
+  RUN_TEST_CASE(Sort, TestQuickEmptyArray);
+  RUN_TEST_CASE(Sort, TestMergeEmptyArray); 
+  //RUN_TEST_CASE(Sort, TestHeapEmptyArray);
+  
   
 }

@@ -34,7 +34,7 @@ clean:
 
 test: clean
 	$(GCC) $(GCCFLAGS) -fprofile-arcs -ftest-coverage $(INC_DIRS) $(SRC_TEST) -o $(TARGET1)
-	- ./$(TARGET1) -v
+	./$(TARGET1) -v
 
 cppcheck: clean
 	cppcheck --enable=all --suppress=missingIncludeSystem $(SRC_FILES)
