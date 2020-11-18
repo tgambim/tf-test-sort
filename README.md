@@ -29,9 +29,9 @@ MIT License. See [LICENSE](LICENSE) for details.
   
   Dentro do directory root execute o make
   
-  make test               ->  Teste do Unity
-  make cov                ->  Para usar o gcov sobre o arquivo sort.c
-  make cppcheck           ->  Para usar o cppcheck sobre array.c , get_opt.c , sort.c e main.c
-  make valgrind [method]  ->  Para usar o valgrind para um metodo especifico [quick, heap, selection, shell, merge]. Os parametros sao fixos em <-n 6 -s descending -P>. 
-  make sanitizer          ->  Para usar o sanitizer para um metodo especifico [quick, heap, selection, shell, merge]. Os parametros sao fixos em <-n 6 -s descending -P>.
-  make clean              ->  Limpa todos arquivos gerados durante alguma das execucoes.
+ * make test               ->  Teste do Unity
+ * make cov                ->  Para usar o gcov sobre o arquivo sort.c
+ * make cppcheck           ->  Para usar o cppcheck sobre array.c , get_opt.c , sort.c e main.c
+ * make valgrind [method]  ->  Para usar o valgrind para um metodo especifico [quick, heap, selection, shell, merge]. Os parametros sao fixos em <-n 6 -s descending -P>. 
+ * make sanitizer          ->  Para usar o sanitizer para um metodo especifico [quick, heap, selection, shell, merge]. Os parametros sao fixos em <-n 6 -s descending -P>.
+ * make clean              ->  Limpa todos arquivos gerados durante alguma das execucoes.
